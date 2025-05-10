@@ -5,7 +5,10 @@ import {useState} from "react";
 function App() {
     //let email = 'kostecki.andrij@gmail.com';
     const[email, setEmail] = useState('');
-    let message;
+    //const[loggedIn, setLoggedIn] = useState(false);
+    const[loggenInAs, setLoggenInAs] =useState(null);
+
+
 
 
     function handleChange(event) {
@@ -13,22 +16,32 @@ function App() {
 
     }
 
-    if (email.length <= 5) {
-        message='za krótki';
-    } else if (email.length < 15) {
-        message='w sam raz';}
-    else if (email.length > 15) {message='długi';}
+    function handleAuthenticate(){
+        setLoggenInAs(email);
+        setEmail('');
+    }
+
+    let content;
+
+    if (loggenInAs) {
+        content = <div>
+            <h2>'Witaj, {loggenInAs}</h2>
+            <a onClick={()=> setLoggenInAs(null)}>Wyloguj </a>
+        </div>;
+    } else {
+        content = <div>
+            <input type = "text" onChange={handleChange} value={email} />
+            <button onClick={handleAuthenticate}> Zaloguj się </button>
+
+        </div>
+    }
+
 
 
     return (
     <div >
       <h1>System do zapisów na zajęcia</h1>
-        <h2>Twój-email to {email}</h2>
-
-        <div>{message}</div>
-
-
-        <input type = "text" onChange={handleChange}/>
+        {content}
 
 
     </div>
