@@ -2,24 +2,22 @@ import logo from './logo.svg';
 import './App.css';
 import "milligram";
 import {useState} from "react";
+import {LoginForm} from "./LoginFrom";
 
 function App() {
-    //let email = 'kostecki.andrij@gmail.com';
-    const[email, setEmail] = useState('');
-    //const[loggedIn, setLoggedIn] = useState(false);
+
     const[loggenInAs, setLoggenInAs] =useState(null);
 
+    /*function login(email){
+        if (email){
+            setLoggenInAs(email);
+        }
+    }*/
 
 
-
-    function handleChange(event) {
-        setEmail(event.target.value);
-
-    }
-
-    function handleAuthenticate(){
+    function handleAuthenticate(email){
         setLoggenInAs(email);
-        setEmail('');
+
     }
 
     let content;
@@ -30,11 +28,8 @@ function App() {
             <a onClick={()=> setLoggenInAs(null)}>Wyloguj </a>
         </div>;
     } else {
-        content = <div>
-            <input type = "text" onChange={handleChange} value={email} />
-            <button onClick={handleAuthenticate}> Zaloguj się </button>
+        content = <LoginForm onLogin={handleAuthenticate}/>
 
-        </div>
     }
 
 
