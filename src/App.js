@@ -3,17 +3,11 @@ import './App.css';
 import "milligram";
 import {useState} from "react";
 import {LoginForm} from "./LoginFrom";
+import {LogOutForm, UserPanel} from "./UserPanel";
 
 function App() {
 
     const[loggenInAs, setLoggenInAs] =useState(null);
-
-    /*function login(email){
-        if (email){
-            setLoggenInAs(email);
-        }
-    }*/
-
 
     function handleAuthenticate(email){
         setLoggenInAs(email);
@@ -23,25 +17,23 @@ function App() {
     let content;
 
     if (loggenInAs) {
-        content = <div>
-            <h2>'Witaj, {loggenInAs}</h2>
-            <a onClick={()=> setLoggenInAs(null)}>Wyloguj </a>
-        </div>;
+        content = <UserPanel userName={loggenInAs} onLogOut={handleAuthenticate} />;
     } else {
         content = <LoginForm onLogin={handleAuthenticate}/>
-
     }
 
 
 
     return (
-    <div >
-      <h1>System do zapisów na zajęcia</h1>
-        {content}
-
-
-    </div>
-  );
+        <div>
+            <h1>System do zapisów na zajęcia</h1>
+            {
+                loggenInAs
+                    ? <UserPanel username={loggenInAs} onLogout={()=> handleAuthenticate(null)} />
+                    : <LoginForm onLogin={handleAuthenticate} />
+            }
+        </div>
+    );
 }
 
 export default App;
